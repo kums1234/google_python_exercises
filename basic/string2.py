@@ -17,7 +17,13 @@
 # Return the resulting string.
 def verbing(s):
   # +++your code here+++
-  return
+  if s[-3:] == 'ing':
+    output = s + 'ly'
+  elif len(s) >= 3:
+    output = s + 'ing'
+  else:
+    output = s
+  return output
 
 
 # E. not_bad
@@ -30,10 +36,59 @@ def verbing(s):
 # This dinner is good!
 def not_bad(s):
   # +++your code here+++
-  return
+  not_index = s.find('not')
+  bad_index = s.find('bad')
+  if bad_index - not_index >= 1:
+    output = s[:not_index] + 'good' + s[(bad_index + 3):]
+  else:
+    output = s
+  return output
 
+# F. front
+# Consider dividing a string into two halves.
+# If the length is even, the front and back halves are the same length.
+# If the length is odd, we'll say that the extra char goes in the front half.
+# e.g. 'abcde', the front half is 'abc', the back half 'de'.
+# Given a string, a, return the front half of the string
+def front(s):
+  # +++your code here+++
+  middle = len(s) // 2
+  mod = len(s) % 2
 
-# F. front_back
+  if len(s) == 0:
+    output = ''
+  elif len(s) == 1:
+    output = s
+  elif mod == 0:
+    output = s[:int(middle)]
+  else:
+    output = s[:int(middle+0.5+1)]
+
+  return output
+
+# F. back
+# Consider dividing a string into two halves.
+# If the length is even, the front and back halves are the same length.
+# If the length is odd, we'll say that the extra char goes in the front half.
+# e.g. 'abcde', the front half is 'abc', the back half 'de'.
+# Given a string, a, return the back half of the string
+def back(s):
+  # +++your code here+++
+  middle = len(s) // 2
+  mod = len(s) % 2
+
+  if len(s) == 0:
+    output = ''
+  elif len(s) == 1:
+    output = s
+  elif mod == 0:
+    output = s[int(middle):]
+  else:
+    output = s[int(middle+0.5+1):]
+
+  return output
+
+# H. front_back
 # Consider dividing a string into two halves.
 # If the length is even, the front and back halves are the same length.
 # If the length is odd, we'll say that the extra char goes in the front half.
@@ -42,7 +97,9 @@ def not_bad(s):
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
   # +++your code here+++
-  return
+  output = front(a) + front(b) + back(a) + back(b)
+
+  return output
 
 
 # Simple provided test() function used in main() to print
@@ -52,26 +109,26 @@ def test(got, expected):
     prefix = ' OK '
   else:
     prefix = '  X '
-  print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
+  print ('%s got: %s expected: %s' % (prefix, repr(got), repr(expected)))
 
 
 # main() calls the above functions with interesting inputs,
 # using the above test() to check if the result is correct or not.
 def main():
-  print 'verbing'
+  print ('verbing')
   test(verbing('hail'), 'hailing')
   test(verbing('swiming'), 'swimingly')
   test(verbing('do'), 'do')
 
   print
-  print 'not_bad'
+  print ('not_bad')
   test(not_bad('This movie is not so bad'), 'This movie is good')
   test(not_bad('This dinner is not that bad!'), 'This dinner is good!')
   test(not_bad('This tea is not hot'), 'This tea is not hot')
   test(not_bad("It's bad yet not"), "It's bad yet not")
 
   print
-  print 'front_back'
+  print ('front_back')
   test(front_back('abcd', 'xy'), 'abxcdy')
   test(front_back('abcde', 'xyz'), 'abcxydez')
   test(front_back('Kitten', 'Donut'), 'KitDontenut')
