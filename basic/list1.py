@@ -22,7 +22,14 @@
 # Note: python does not have a ++ operator, but += works.
 def match_ends(words):
   # +++your code here+++
-  return
+  output = 0
+  for word in words:
+    if len(word) < 2:
+      continue
+    elif word[0] == word[-1]:
+        output += 1
+
+  return output
 
 
 # B. front_x
@@ -34,8 +41,18 @@ def match_ends(words):
 # before combining them.
 def front_x(words):
   # +++your code here+++
-  return
+  list_x = []
+  list_not_x = []
 
+  for word in words:
+    if word.startswith('x'):
+      list_x.append(word)
+    else:
+      list_not_x.append(word)
+  
+  output = sorted(list_x) + sorted(list_not_x)
+
+  return output
 
 
 # C. sort_last
@@ -43,10 +60,11 @@ def front_x(words):
 # order by the last element in each tuple.
 # e.g. [(1, 7), (1, 3), (3, 4, 5), (2, 2)] yields
 # [(2, 2), (1, 3), (3, 4, 5), (1, 7)]
-# Hint: use a custom key= function to extract the last element form each tuple.
+# Hint: use a custom key= function to extract the last element from each tuple.
 def sort_last(tuples):
   # +++your code here+++
-  return
+  output = sorted(tuples, key=lambda tuple: tuple[1])
+  return output
 
 
 # Simple provided test() function used in main() to print
@@ -56,18 +74,18 @@ def test(got, expected):
     prefix = ' OK '
   else:
     prefix = '  X '
-  print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
+  print ('%s got: %s expected: %s' % (prefix, repr(got), repr(expected)))
 
 
 # Calls the above functions with interesting inputs.
 def main():
-  print 'match_ends'
+  print ('match_ends')
   test(match_ends(['aba', 'xyz', 'aa', 'x', 'bbb']), 3)
   test(match_ends(['', 'x', 'xy', 'xyx', 'xx']), 2)
   test(match_ends(['aaa', 'be', 'abc', 'hello']), 1)
 
   print
-  print 'front_x'
+  print ('front_x')
   test(front_x(['bbb', 'ccc', 'axx', 'xzz', 'xaa']),
        ['xaa', 'xzz', 'axx', 'bbb', 'ccc'])
   test(front_x(['ccc', 'bbb', 'aaa', 'xcc', 'xaa']),
@@ -77,7 +95,7 @@ def main():
 
        
   print
-  print 'sort_last'
+  print ('sort_last')
   test(sort_last([(1, 3), (3, 2), (2, 1)]),
        [(2, 1), (3, 2), (1, 3)])
   test(sort_last([(2, 3), (1, 2), (3, 1)]),
