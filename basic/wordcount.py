@@ -34,24 +34,69 @@ When that's working, try for the next milestone.
 
 Optional: define a helper function to avoid code duplication inside
 print_words() and print_top().
-
 """
 
 import sys
+import collections
 
-# +++your code here+++
+def count_words(filename):
+  # +++your code here+++
+  index = 0
+  unique_words = []
+  words_and_counts = {}
+
+  f = open(filename, 'r')
+  if f.mode == 'r':
+    contents = f.read().lower()
+    words = contents.split()
+    words = sorted(words)
+    unique_words = list(set(words))
+    unique_words = sorted(unique_words)
+  
+  for word in unique_words:
+    word = str(word)
+    words_and_counts[word] = words.count(word)
+
+  return words_and_counts
+
+def print_words(filename):
+  # +++your code here+++
+  d = count_words(filename)
+
+  for x in d:
+    print(repr(x),d[x])
+
+  return
+
+
+def print_top(filename):
+  # +++your code here+++
+
+  d = count_words(filename)
+
+  sorted_d = dict(sorted(d.items(), key = lambda kv: kv[1], reverse = True))
+
+  loop = 1
+
+  for k,v in sorted_d.items():
+    if loop <= 20:
+      print(k,v)
+      loop += 1
+    else:
+      break
+
+  return
+
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
-###
-
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
   if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
+    print ('usage: ./wordcount.py {--count | --topcount} file')
     sys.exit(1)
 
   option = sys.argv[1]
@@ -61,7 +106,7 @@ def main():
   elif option == '--topcount':
     print_top(filename)
   else:
-    print 'unknown option: ' + option
+    print ('unknown option: ' + option)
     sys.exit(1)
 
 if __name__ == '__main__':
